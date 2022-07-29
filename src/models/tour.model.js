@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const slugify = require('slugify')
-const validator = require('validator')
+// const validator = require('validator')
 
 const tourSchema = new mongoose.Schema(
   {
@@ -89,10 +89,10 @@ tourSchema.pre('save', function (next) {
   next()
 })
 
-tourSchema.post('save', function (doc, next) {
-  console.log({ doc })
-  next()
-})
+// tourSchema.post('save', function (doc, next) {
+//   console.log({ doc })
+//   next()
+// })
 
 // QUERY MIDDLEWARE
 // tourSchema.pre('find', function (next) {
