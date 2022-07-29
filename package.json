@@ -6,14 +6,15 @@
   "description": "Learning node, express and mongodb",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/server.js",
+    "dev": "nodemon ./src/server.js",
+    "start": "NODE_ENV=production nodemon ./src/server.js",
     "debug": "ndb ./src/server.js"
   },
   "author": "Vitor Santana",
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "mongoose": "^6.4.4",
+    "mongoose": "^6.5.0",
     "morgan": "^1.10.0",
     "slugify": "^1.6.5",
     "validator": "^13.7.0"
