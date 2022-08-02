@@ -10,7 +10,7 @@ const {
   getMonthlyPlan,
 } = require('../controllers/Tours.controller')
 
-const { aliasTopTours } = require('../middlewares/tours.middlewares')
+const { aliasTopTours, restrict } = require('../middlewares/tours.middlewares')
 const { protect } = require('../middlewares/auth.middlewares')
 
 const router = Router()
@@ -24,6 +24,6 @@ router
   .route('/:id')
   .get(getTourController)
   .patch(updateTourController)
-  .delete(deleteTourController)
+  .delete(protect, restrict('admin', 'lead-guide'), deleteTourController)
 
 module.exports = router
