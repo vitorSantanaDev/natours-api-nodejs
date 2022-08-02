@@ -7,11 +7,15 @@ const {
   updateUserController,
   deleteUserController,
 } = require('../controllers/Users.controller')
-const { signUpController } = require('../controllers/Auth.controller')
+const {
+  signUpController,
+  loginController,
+} = require('../controllers/Auth.controller')
 
 const router = Router()
 
 router.post('/signup', signUpController)
+router.post('/login', loginController)
 
 router.route('/').get(getAllUsersController).post(createUserController)
 
