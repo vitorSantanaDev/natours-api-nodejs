@@ -10,12 +10,17 @@ const {
 const {
   signUpController,
   loginController,
+  forgotPassword,
+  resetPassword,
 } = require('../controllers/Auth.controller')
 
 const router = Router()
 
 router.post('/signup', signUpController)
 router.post('/login', loginController)
+
+router.post('/forgot-password', forgotPassword)
+router.patch('/reset-password/:token', resetPassword)
 
 router.route('/').get(getAllUsersController).post(createUserController)
 
