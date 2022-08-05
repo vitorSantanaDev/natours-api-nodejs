@@ -56,7 +56,7 @@ exports.loginController = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res, false)
 })
 
-exports.forgotPassword = catchAsync(async (req, res, next) => {
+exports.forgotPasswordController = catchAsync(async (req, res, next) => {
   // get user based on POsted email
   const user = await UserModel.findOne({ email: req.body.email })
   if (!user) {
@@ -96,7 +96,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   }
 })
 
-exports.resetPassword = catchAsync(async (req, res, next) => {
+exports.resetPasswordController = catchAsync(async (req, res, next) => {
   // get user based on the token
   const hashedToken = crypto
     .createHash('sha256')
@@ -125,7 +125,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res)
 })
 
-exports.updatePassword = catchAsync(async (req, res, next) => {
+exports.updatePasswordController = catchAsync(async (req, res, next) => {
   // Get user from collection
   const user = await UserModel.findById(req.user.id).select('+password')
   // Check if POSTed current password is correct

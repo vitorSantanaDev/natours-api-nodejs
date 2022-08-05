@@ -6,14 +6,15 @@ const {
   createUserController,
   updateUserController,
   deleteUserController,
+  updateCurrentUserController,
 } = require('../controllers/Users.controller')
 
 const {
   signUpController,
   loginController,
-  forgotPassword,
-  resetPassword,
-  updatePassword,
+  forgotPasswordController,
+  resetPasswordController,
+  updatePasswordController,
 } = require('../controllers/Auth.controller')
 
 const { protect } = require('../middlewares/auth.middlewares')
@@ -23,9 +24,10 @@ const router = Router()
 router.post('/signup', signUpController)
 router.post('/login', loginController)
 
-router.post('/forgot-password', forgotPassword)
-router.patch('/reset-password/:token', resetPassword)
-router.patch('/update-password', protect, updatePassword)
+router.post('/forgot-password', forgotPasswordController)
+router.patch('/reset-password/:token', resetPasswordController)
+router.patch('/update-password', protect, updatePasswordController)
+router.patch('/update-current-user', protect, updateCurrentUserController)
 
 router.route('/').get(getAllUsersController).post(createUserController)
 
