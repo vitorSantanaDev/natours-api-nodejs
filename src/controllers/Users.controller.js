@@ -52,6 +52,14 @@ exports.updateCurrentUserController = catchAsync(async (req, res, next) => {
   })
 })
 
+exports.deleteCurrentUserController = catchAsync(async (req, res, next) => {
+  await UserModel.findByIdAndUpdate(req.user.id, { active: false })
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  })
+})
+
 exports.createUserController = (req, res) => {
   res.status(500).json({
     status: 500,
