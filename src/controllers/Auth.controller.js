@@ -35,6 +35,7 @@ exports.signUpController = catchAsync(async (req, res, next) => {
 
   let userResult = newUser.toObject()
   delete userResult['password']
+  delete userResult['active']
 
   createSendToken(userResult, 201, res)
 })
