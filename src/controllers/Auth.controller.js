@@ -12,6 +12,17 @@ const signToken = (id) => {
   })
 }
 
+const createSendToken = (user, statusCode, res, sendUserData = true) => {
+  const token = signToken(user._id)
+  res.status(statusCode).json({
+    status: 'success',
+    data: {
+      token,
+      user: sendUserData ? user : null,
+    },
+  })
+}
+
 exports.signUpController = catchAsync(async (req, res, next) => {
   const newUser = await UserModel.create({
     name: req.body.name,
@@ -25,15 +36,7 @@ exports.signUpController = catchAsync(async (req, res, next) => {
   let userResult = newUser.toObject()
   delete userResult['password']
 
-  const token = signToken(userResult._id)
-
-  res.status(201).json({
-    status: 'success',
-    data: {
-      token,
-      user: userResult,
-    },
-  })
+  createSendToken(userResult, 201, res)
 })
 
 exports.loginController = catchAsync(async (req, res, next) => {
@@ -50,12 +53,7 @@ exports.loginController = catchAsync(async (req, res, next) => {
     return next(new AppError(`Invalid email or password`, 401))
   }
 
-  const token = signToken(user._id)
-
-  res.status(200).json({
-    status: 'success',
-    token,
-  })
+  createSendToken(user, 200, res, false)
 })
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
@@ -124,10 +122,20 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // Update changedPassowrdAt property for the current user
 
   // Log the user in, send JWT
-  const token = signToken(user._id)
+  createSendToken(user, 200, res)
+})
 
-  res.status(200).json({
-    status: 'success',
-    token,
-  })
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  // Get user from collection
+  const user = await UserModel.findById(req.user.id).select('+password')
+  // Check if POSTed current password is correct
+  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+    return next(new AppError(`Your current password is wrong.`, 401))
+  }
+  // If so, update password
+  user.password = req.body.password
+  user.passwordConfirm = req.body.passwordConfirm
+  await user.save()
+  //Log user in, send JWT
+  createSendToken(user, 200, res)
 })

@@ -7,12 +7,16 @@ const {
   updateUserController,
   deleteUserController,
 } = require('../controllers/Users.controller')
+
 const {
   signUpController,
   loginController,
   forgotPassword,
   resetPassword,
+  updatePassword,
 } = require('../controllers/Auth.controller')
+
+const { protect } = require('../middlewares/auth.middlewares')
 
 const router = Router()
 
@@ -21,6 +25,7 @@ router.post('/login', loginController)
 
 router.post('/forgot-password', forgotPassword)
 router.patch('/reset-password/:token', resetPassword)
+router.patch('/update-password', protect, updatePassword)
 
 router.route('/').get(getAllUsersController).post(createUserController)
 
