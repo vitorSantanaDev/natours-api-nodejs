@@ -8,7 +8,7 @@ const {
 const { protect } = require('../middlewares/auth.middlewares')
 const { restrict } = require('../middlewares/tours.middlewares')
 
-const router = Router()
+const router = Router({ mergeParams: true })
 
 router
   .route('/')

@@ -10,10 +10,14 @@ const {
   getMonthlyPlan,
 } = require('../controllers/Tours.controller')
 
-const { aliasTopTours, restrict } = require('../middlewares/tours.middlewares')
 const { protect } = require('../middlewares/auth.middlewares')
+const { aliasTopTours, restrict } = require('../middlewares/tours.middlewares')
+
+const reviewsRoutes = require('../routes/reviews.routes')
 
 const router = Router()
+
+router.use('/:tourID/reviews', reviewsRoutes)
 
 router.route('/').get(protect, getAllToursController).post(createTourController)
 router.route('/top-5-cheap').get(aliasTopTours, getAllToursController)
