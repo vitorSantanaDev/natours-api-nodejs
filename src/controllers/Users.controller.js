@@ -2,6 +2,18 @@ const UserModel = require('../models/user.model')
 const catchAsync = require('../utils/catchAsync')
 const AppError = require('../utils/appError')
 
+const {
+  deleteOne,
+  updateOne,
+  getOne,
+  getAll,
+} = require('../functions/handlerFactory')
+
+exports.getUserController = getOne(UserModel)
+exports.getAllUsersController = getAll(UserModel)
+exports.deleteUserController = deleteOne(UserModel)
+exports.updateUserController = updateOne(UserModel)
+
 const filterObject = (obj, ...allowedFields) => {
   const newObject = {}
   Object.keys(obj).forEach((key) => {
@@ -9,19 +21,6 @@ const filterObject = (obj, ...allowedFields) => {
   })
   return newObject
 }
-
-exports.getAllUsersController = catchAsync(async (req, res, next) => {
-  const users = await UserModel.find()
-
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    requestTimeAte: req.requestTimeAt,
-    data: {
-      users,
-    },
-  })
-})
 
 exports.updateCurrentUserController = catchAsync(async (req, res, next) => {
   // create error if user POSTs password data
@@ -61,27 +60,6 @@ exports.deleteCurrentUserController = catchAsync(async (req, res, next) => {
 })
 
 exports.createUserController = (req, res) => {
-  res.status(500).json({
-    status: 500,
-    message: 'this route is not yet defined',
-  })
-}
-
-exports.getUserController = (req, res) => {
-  res.status(500).json({
-    status: 500,
-    message: 'this route is not yet defined',
-  })
-}
-
-exports.updateUserController = (req, res) => {
-  res.status(500).json({
-    status: 500,
-    message: 'this route is not yet defined',
-  })
-}
-
-exports.deleteUserController = (req, res) => {
   res.status(500).json({
     status: 500,
     message: 'this route is not yet defined',

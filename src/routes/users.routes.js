@@ -1,11 +1,11 @@
 const { Router } = require('express')
 
 const {
-  getAllUsersController,
   getUserController,
   createUserController,
   updateUserController,
   deleteUserController,
+  getAllUsersController,
   updateCurrentUserController,
   deleteCurrentUserController,
 } = require('../controllers/Users.controller')
@@ -19,6 +19,7 @@ const {
 } = require('../controllers/Auth.controller')
 
 const { protect } = require('../middlewares/auth.middlewares')
+const { restrict } = require('../middlewares/tours.middlewares')
 
 const router = Router()
 
@@ -36,7 +37,7 @@ router.route('/').get(getAllUsersController).post(createUserController)
 router
   .route('/:id')
   .get(getUserController)
-  .patch(updateUserController)
-  .delete(deleteUserController)
+  .patch(protect, restrict('admin'), updateUserController)
+  .delete(protect, restrict('admin'), deleteUserController)
 
 module.exports = router
