@@ -19,15 +19,21 @@ const router = Router()
 
 router.use('/:tourID/reviews', reviewsRoutes)
 
-router.route('/').get(protect, getAllToursController).post(createTourController)
+router
+  .route('/')
+  .get(getAllToursController)
+  .post(protect, restrict('admin', 'lead-guide'), createTourController)
+
 router.route('/top-5-cheap').get(aliasTopTours, getAllToursController)
 router.route('/tour-stats').get(getTourStatsController)
-router.route('/month-plan/:year').get(getMonthlyPlan)
+router
+  .route('/month-plan/:year')
+  .get(protect, restrict('admin', 'lead-guide', 'guide'), getMonthlyPlan)
 
 router
   .route('/:id')
   .get(getTourController)
-  .patch(updateTourController)
+  .patch(protect, restrict('admin', 'lead-guide'), updateTourController)
   .delete(protect, restrict('admin', 'lead-guide'), deleteTourController)
 
 module.exports = router

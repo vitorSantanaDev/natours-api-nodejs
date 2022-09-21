@@ -14,20 +14,17 @@ const { restrict } = require('../middlewares/tours.middlewares')
 
 const router = Router({ mergeParams: true })
 
+router.use(protect)
+
 router
   .route('/')
-  .get(protect, getAllReviewsController)
-  .post(
-    protect,
-    restrict('user'),
-    setTourUserIDsMiddleware,
-    createReviewController
-  )
+  .get(getAllReviewsController)
+  .post(restrict('user'), setTourUserIDsMiddleware, createReviewController)
 
 router
   .route('/:id')
   .get(getReviewController)
-  .delete(protect, restrict('user'), deleteReviewController)
-  .patch(protect, restrict('user'), updateReviewController)
+  .delete(restrict('user', 'admin'), deleteReviewController)
+  .patch(restrict('user', 'admin'), updateReviewController)
 
 module.exports = router

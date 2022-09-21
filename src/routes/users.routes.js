@@ -27,19 +27,23 @@ const router = Router()
 router.post('/signup', signUpController)
 router.post('/login', loginController)
 
-router.get('/me', protect, getMe, getUserController)
+// protect all routes after this middleware
+router.use(protect)
+
+router.get('/me', getMe, getUserController)
 router.post('/forgot-password', forgotPasswordController)
 router.patch('/reset-password/:token', resetPasswordController)
-router.patch('/update-password', protect, updatePasswordController)
-router.patch('/update-current-user', protect, updateCurrentUserController)
-router.delete('/delete-current-user', protect, deleteCurrentUserController)
+router.patch('/update-password', updatePasswordController)
+router.patch('/update-current-user', updateCurrentUserController)
+router.delete('/delete-current-user', deleteCurrentUserController)
+
+router.use(restrict('admin'))
 
 router.route('/').get(getAllUsersController).post(createUserController)
-
 router
   .route('/:id')
   .get(getUserController)
-  .patch(protect, restrict('admin'), updateUserController)
-  .delete(protect, restrict('admin'), deleteUserController)
+  .patch(updateUserController)
+  .delete(deleteUserController)
 
 module.exports = router
