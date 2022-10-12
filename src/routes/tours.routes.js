@@ -8,6 +8,7 @@ const {
   deleteTourController,
   getTourStatsController,
   getMonthlyPlan,
+  getTourWithin,
 } = require('../controllers/Tours.controller')
 
 const { protect } = require('../middlewares/auth.middlewares')
@@ -29,6 +30,10 @@ router.route('/tour-stats').get(getTourStatsController)
 router
   .route('/month-plan/:year')
   .get(protect, restrict('admin', 'lead-guide', 'guide'), getMonthlyPlan)
+
+router
+  .route('/tours-within/:distance/center/:latlng/unit/:unit')
+  .get(getTourWithin)
 
 router
   .route('/:id')
