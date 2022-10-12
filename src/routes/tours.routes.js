@@ -9,6 +9,7 @@ const {
   getTourStatsController,
   getMonthlyPlan,
   getTourWithin,
+  getDistances,
 } = require('../controllers/Tours.controller')
 
 const { protect } = require('../middlewares/auth.middlewares')
@@ -34,6 +35,8 @@ router
 router
   .route('/tours-within/:distance/center/:latlng/unit/:unit')
   .get(getTourWithin)
+
+router.route('/distances/:latlng/unit/:unit').get(getDistances)
 
 router
   .route('/:id')
