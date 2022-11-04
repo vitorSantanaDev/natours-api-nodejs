@@ -26,7 +26,12 @@ app.use(express.static(path.join(__dirname, '/../public')))
 // Global middlewares
 
 // Set security HTTP headers
-app.use(helmet())
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+  })
+)
 
 // Development looging
 if (process.env.NODE_ENV === 'development') {
@@ -66,6 +71,7 @@ app.use(
 )
 
 // Request time middleware
+
 app.use((req, res, next) => {
   req.requestTimeAt = new Date().toISOString()
   next()
