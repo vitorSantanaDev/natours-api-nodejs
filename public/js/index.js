@@ -1,11 +1,12 @@
 import '@babel/polyfill'
 
-import { loginFuncionality } from './login'
+import { loginFuncionality, logoutFuncionality } from './login'
 import { displayMap } from './mapbox'
 
 // DOM ELEMENTS
 const mapBoxContainer = document.getElementById('map')
 const formElement = document.querySelector('.form')
+const logoutButton = document.querySelector('.nav__el--logout')
 
 if (mapBoxContainer) {
   const locations = JSON.parse(mapBoxContainer.dataset.locations)
@@ -21,4 +22,8 @@ if (formElement) {
 
     loginFuncionality({ email: emailValue, password: passwordValue })
   })
+}
+
+if (logoutButton) {
+  logoutButton.addEventListener('click', logoutFuncionality)
 }

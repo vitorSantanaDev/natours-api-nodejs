@@ -11,8 +11,9 @@ const {
 } = require('../controllers/Users.controller')
 
 const {
-  signUpController,
   loginController,
+  logoutController,
+  signUpController,
   forgotPasswordController,
   resetPasswordController,
   updatePasswordController,
@@ -26,6 +27,7 @@ const router = Router()
 
 router.post('/signup', signUpController)
 router.post('/login', loginController)
+router.get('/logout', logoutController)
 
 // protect all routes after this middleware
 router.use(protect)
