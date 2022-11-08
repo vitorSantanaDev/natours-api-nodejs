@@ -30,10 +30,18 @@ if (formElement) {
 if (userDataForm) {
   userDataForm.addEventListener('submit', (event) => {
     event.preventDefault()
+
     const username = document.querySelector('.form-user-data #name').value
     const email = document.querySelector('.form-user-data #email').value
+    const photo = document.querySelector('.form-user-data #photo').files[0]
 
-    updateSettings({ name: username, email }, 'data')
+    const formData = new FormData()
+
+    formData.append('name', username)
+    formData.append('email', email)
+    formData.append('photo', photo)
+
+    updateSettings(formData, 'data')
   })
 }
 

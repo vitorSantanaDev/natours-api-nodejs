@@ -34,6 +34,7 @@ exports.updateCurrentUserController = catchAsync(async (req, res, next) => {
   }
   // filtered out unwanted fields name that are no allowed, to update
   const filteredBody = filterObject(req.body, 'name', 'email')
+  if (req.file) filteredBody.photo = req.file.filename
 
   // update user document
   const updatedUser = await UserModel.findByIdAndUpdate(
