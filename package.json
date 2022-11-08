@@ -9,8 +9,8 @@
     "dev": "nodemon ./src/server.js",
     "start": "NODE_ENV=production nodemon ./src/server.js",
     "debug": "ndb ./src/server.js",
-    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundler.js",
-    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundler.js"
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundler.js --public-url /js",
+    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundler.js --public-url /js"
   },
   "author": "Vitor Santana",
   "dependencies": {
