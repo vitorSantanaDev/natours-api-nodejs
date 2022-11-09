@@ -14,6 +14,10 @@ const {
 
 const { protect } = require('../middlewares/auth.middlewares')
 const { aliasTopTours, restrict } = require('../middlewares/tours.middlewares')
+const {
+  resizeTourImages,
+  uploadTourImages,
+} = require('../middlewares/upload.middlewares')
 
 const reviewsRoutes = require('../routes/reviews.routes')
 
@@ -41,7 +45,13 @@ router.route('/distances/:latlng/unit/:unit').get(getDistances)
 router
   .route('/:id')
   .get(getTourController)
-  .patch(protect, restrict('admin', 'lead-guide'), updateTourController)
+  .patch(
+    protect,
+    restrict('admin', 'lead-guide'),
+    uploadTourImages,
+    resizeTourImages,
+    updateTourController
+  )
   .delete(protect, restrict('admin', 'lead-guide'), deleteTourController)
 
 module.exports = router
